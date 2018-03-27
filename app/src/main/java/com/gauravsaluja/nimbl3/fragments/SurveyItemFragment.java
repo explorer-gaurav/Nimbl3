@@ -52,7 +52,6 @@ public class SurveyItemFragment extends Fragment implements View.OnClickListener
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
 
         Bundle b = getArguments();
         if (b != null && b.containsKey(KEY_SURVEY_DATA)) {
