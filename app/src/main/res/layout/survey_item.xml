@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/item_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+
+    <com.gauravsaluja.nimbl3.customviews.TextViewNunitoRegularFont
+        android:id="@+id/item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/value_8dp"
+        android:layout_marginLeft="@dimen/value_8dp"
+        android:layout_marginRight="@dimen/value_8dp"
+        android:layout_marginStart="@dimen/value_8dp"
+        android:layout_marginTop="@dimen/value_48dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:singleLine="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize_28sp" />
+
+    <com.gauravsaluja.nimbl3.customviews.TextViewNunitoLightFont
+        android:id="@+id/item_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_title"
+        android:layout_marginEnd="@dimen/value_8dp"
+        android:layout_marginLeft="@dimen/value_8dp"
+        android:layout_marginRight="@dimen/value_8dp"
+        android:layout_marginStart="@dimen/value_8dp"
+        android:layout_marginTop="@dimen/value_8dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:singleLine="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize_18sp" />
+
+    <com.gauravsaluja.nimbl3.customviews.TextViewNunitoLightFont
+        android:id="@+id/item_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/value_48dp"
+        android:background="@drawable/selector_take_survey_button"
+        android:gravity="center"
+        android:paddingBottom="@dimen/value_12dp"
+        android:paddingEnd="@dimen/value_16dp"
+        android:paddingLeft="@dimen/value_16dp"
+        android:paddingRight="@dimen/value_16dp"
+        android:paddingStart="@dimen/value_16dp"
+        android:paddingTop="@dimen/value_12dp"
+        android:text="@string/take_the_survey"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize_20sp" />
+
+</RelativeLayout>

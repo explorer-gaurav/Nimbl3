@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Nimbl3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="surveys">Surveys</string>
+    <string name="take_the_survey">Take the survey</string>
+    <string name="loading">Loading...</string>
+    <string name="generating_token">Generating Token...</string>
+    <string name="fetching_surveys">Fetching Surveys...</string>
+
+    <string name="take_surveys">Take Surveys</string>
+</resources>
