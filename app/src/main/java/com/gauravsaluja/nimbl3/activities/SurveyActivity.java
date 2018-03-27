@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gauravsaluja.nimbl3.R;
@@ -33,7 +33,7 @@ public class SurveyActivity extends BaseActivity implements NavigationView.OnNav
 
     @Nullable
     @BindView(R.id.app_title_container)
-    public LinearLayout titleContainer;
+    public RelativeLayout titleContainer;
 
     @Nullable
     @BindView(R.id.action_refresh)
@@ -66,6 +66,8 @@ public class SurveyActivity extends BaseActivity implements NavigationView.OnNav
         unbinder = ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toggle = new EndDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -73,17 +75,7 @@ public class SurveyActivity extends BaseActivity implements NavigationView.OnNav
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-
-        setToolbarWidth();
         initFragment();
-    }
-
-    private void setToolbarWidth() {
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int screen_width = metrics.widthPixels;
-        int ic_menu_width = getResources().getDrawable(android.R.drawable.ic_menu_gallery).getIntrinsicWidth();
-        Toolbar.LayoutParams params = new Toolbar.LayoutParams(screen_width - ic_menu_width - (int) getResources().getDimension(R.dimen.value_32dp), (int) getResources().getDimension(R.dimen.value_48dp));
-        titleContainer.setLayoutParams(params);
     }
 
     @Optional
@@ -92,6 +84,16 @@ public class SurveyActivity extends BaseActivity implements NavigationView.OnNav
         Fragment fragment = SurveyFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.survey_container, fragment, SurveyFragment.TAG_FRAGMENT).commit();
+    }
+
+    @Optional
+    @OnClick(R.id.action_navigate)
+    public void navigate() {
+        if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
+        } else {
+            drawer.openDrawer(GravityCompat.END);
+        }
     }
 
     @Override

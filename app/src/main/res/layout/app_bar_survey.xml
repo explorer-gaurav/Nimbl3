@@ -18,9 +18,9 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/app_title_container"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/value_48dp"
                 android:layout_gravity="center"
                 android:background="@color/dark_blue"
@@ -31,6 +31,8 @@
                     android:id="@+id/action_refresh"
                     android:layout_width="@dimen/value_28dp"
                     android:layout_height="@dimen/value_28dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_refresh_white_24dp" />
 
@@ -39,7 +41,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
+                    android:layout_toRightOf="@+id/action_refresh"
+                    android:layout_toLeftOf="@+id/action_navigate"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:singleLine="true"
@@ -48,7 +51,18 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/textsize_20sp"
                     android:textStyle="bold" />
-            </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/action_navigate"
+                    android:layout_width="@dimen/value_28dp"
+                    android:layout_height="@dimen/value_28dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/value_8dp"
+                    android:layout_marginEnd="@dimen/value_8dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_menu_white_24dp" />
+            </RelativeLayout>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

@@ -1,10 +1,10 @@
 package com.gauravsaluja.nimbl3.mvp.presenter;
 
 import com.gauravsaluja.nimbl3.R;
+import com.gauravsaluja.nimbl3.application.NimblApplication;
 import com.gauravsaluja.nimbl3.baseclasses.BasePresenter;
 import com.gauravsaluja.nimbl3.mvp.contract.SurveyContract;
-import com.gauravsaluja.nimbl3.mvp.model.ISurveysModel;
-import com.gauravsaluja.nimbl3.mvp.model.ITokenModel;
+import com.gauravsaluja.nimbl3.network.service.SurveyService;
 import com.gauravsaluja.nimbl3.network.UseCaseObserver;
 import com.gauravsaluja.nimbl3.network.request.TokenBody;
 import com.gauravsaluja.nimbl3.network.response.Survey;
@@ -12,6 +12,8 @@ import com.gauravsaluja.nimbl3.network.response.Token;
 import com.gauravsaluja.nimbl3.utils.Constants;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -26,17 +28,16 @@ public class SurveyPresenter extends BasePresenter<SurveyContract.View> implemen
     private DisposableObserver tokenObserver;
     private DisposableObserver surveysObserver;
 
-    private ITokenModel tokenModel;
-    private ISurveysModel surveysModel;
+    @Inject
+    public SurveyService surveyService;
 
-    public SurveyPresenter(ITokenModel tokenModel, ISurveysModel surveysModel) {
-        this.tokenModel = tokenModel;
-        this.surveysModel = surveysModel;
+    public SurveyPresenter() {
+
     }
 
     @Override
     public void start() {
-
+        NimblApplication.getAppComponent(NimblApplication.getContext()).inject(this);
     }
 
     // observer for getting access token
@@ -98,7 +99,7 @@ public class SurveyPresenter extends BasePresenter<SurveyContract.View> implemen
         // create an observer and make the call to the model
         tokenObserver = createTokenObserver();
         try {
-            tokenModel.resultToken(tokenBody)
+            surveyService.resultToken(tokenBody)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(tokenObserver);
@@ -114,7 +115,7 @@ public class SurveyPresenter extends BasePresenter<SurveyContract.View> implemen
         // create an observer and make the call to the model
         surveysObserver = createSurveysObserver();
         try {
-            surveysModel.resultSurveys(page, per_page, access_token)
+            surveyService.resultSurveys(page, per_page, access_token)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(surveysObserver);

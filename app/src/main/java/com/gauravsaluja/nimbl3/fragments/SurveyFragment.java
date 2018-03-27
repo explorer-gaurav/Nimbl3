@@ -17,8 +17,6 @@ import com.gauravsaluja.nimbl3.application.NimblApplication;
 import com.gauravsaluja.nimbl3.customviews.CirclePageIndicator;
 import com.gauravsaluja.nimbl3.customviews.VerticalViewPager;
 import com.gauravsaluja.nimbl3.mvp.contract.SurveyContract;
-import com.gauravsaluja.nimbl3.mvp.model.ISurveysModel;
-import com.gauravsaluja.nimbl3.mvp.model.ITokenModel;
 import com.gauravsaluja.nimbl3.mvp.presenter.SurveyPresenter;
 import com.gauravsaluja.nimbl3.network.response.Survey;
 import com.gauravsaluja.nimbl3.network.response.Token;
@@ -38,7 +36,6 @@ import butterknife.Unbinder;
 public class SurveyFragment extends Fragment implements SurveyContract.View {
 
     public static String TAG_FRAGMENT = SurveyFragment.class.getSimpleName();
-    private Unbinder unbinder;
 
     @BindView(R.id.progress_parent)
     public View progressParent;
@@ -55,16 +52,11 @@ public class SurveyFragment extends Fragment implements SurveyContract.View {
     @BindView(R.id.indicator_surveys)
     public CirclePageIndicator mIndicator;
 
+    private Unbinder unbinder;
     private PagerAdapter mPagerAdapter;
 
     @Inject
     protected SurveyPresenter surveyPresenter;
-
-    @Inject
-    protected ITokenModel tokenModel;
-
-    @Inject
-    protected ISurveysModel surveysModel;
 
     public static SurveyFragment newInstance() {
         SurveyFragment fragment = new SurveyFragment();
@@ -74,6 +66,8 @@ public class SurveyFragment extends Fragment implements SurveyContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+
         NimblApplication.getAppComponent(getActivity()).inject(this);
     }
 
@@ -96,6 +90,8 @@ public class SurveyFragment extends Fragment implements SurveyContract.View {
 
         // set the view to presenter and start generate token request
         surveyPresenter.setView(this);
+        surveyPresenter.setContext(getActivity());
+        surveyPresenter.start();
         surveyPresenter.generateToken();
     }
 
