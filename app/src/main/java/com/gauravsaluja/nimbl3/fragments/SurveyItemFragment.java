@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.gauravsaluja.nimbl3.R;
 import com.gauravsaluja.nimbl3.activities.TakeSurveyActivity;
 import com.gauravsaluja.nimbl3.network.response.Survey;
+import com.gauravsaluja.nimbl3.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -73,7 +74,7 @@ public class SurveyItemFragment extends Fragment implements View.OnClickListener
 
         // load image in mItemCover
         Picasso.with(getContext())
-                .load(surveyData.getCoverImageUrl())
+                .load(surveyData.getCoverImageUrl() + Constants.IDENTIFIER_HIGH_RES_IMAGE)
                 .error(R.color.placeholder)
                 .into(mItemCover);
 
