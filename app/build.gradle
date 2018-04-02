@@ -21,6 +21,7 @@ android {
 }
 
 
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -47,6 +48,8 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.reactiveJavaVersion}"
     implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.reactiveAndroidVersion}"
+
+    testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoVersion}"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

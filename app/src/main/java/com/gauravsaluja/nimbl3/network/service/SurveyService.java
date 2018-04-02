@@ -26,6 +26,10 @@ public class SurveyService {
         mSurveyApi = restAdapter.create(SurveyApi.class);
     }
 
+    public Observable<List<Survey>> resultAllSurveys(String access_token) {
+        return mSurveyApi.getAllSurveys(access_token);
+    }
+
     public Observable<List<Survey>> resultSurveys(int page, int per_page, String access_token) {
         return mSurveyApi.getSurveys(page, per_page, access_token);
     }

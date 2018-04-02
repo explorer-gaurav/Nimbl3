@@ -115,7 +115,12 @@ public class SurveyPresenter extends BasePresenter<SurveyContract.View> implemen
         // create an observer and make the call to the model
         surveysObserver = createSurveysObserver();
         try {
-            surveyService.resultSurveys(page, per_page, access_token)
+            /*surveyService.resultSurveys(page, per_page, access_token)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(surveysObserver);*/
+
+            surveyService.resultAllSurveys(access_token)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(surveysObserver);

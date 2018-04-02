@@ -13,7 +13,7 @@ public class Constants {
     public static String VALUE_GRANT_TYPE = "password";
     public static String VALUE_USERNAME = "carlos@nimbl3.com";
     public static String VALUE_PASSWORD = "antikera";
-    
+
     // constant value for getting high resolution image
     public static String IDENTIFIER_HIGH_RES_IMAGE = "l";
 }

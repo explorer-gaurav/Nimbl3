@@ -22,6 +22,9 @@ public interface SurveyApi {
     Observable<Token> getToken(@Body TokenBody body);
 
     @GET("surveys.json")
+    Observable<List<Survey>> getAllSurveys(@Query("access_token") String accessToken);
+
+    @GET("surveys.json")
     Observable<List<Survey>> getSurveys(@Query("page") int page, @Query("per_page") int perPage,
                                         @Query("access_token") String accessToken);
 }
