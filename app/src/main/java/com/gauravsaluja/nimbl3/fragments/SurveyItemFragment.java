@@ -31,16 +31,16 @@ public class SurveyItemFragment extends Fragment implements View.OnClickListener
     private Survey surveyData;
 
     @BindView(R.id.item_cover)
-    public ImageView mItemCover;
+    public ImageView itemCover;
 
     @BindView(R.id.item_title)
-    public TextView mItemTitle;
+    public TextView itemTitle;
 
     @BindView(R.id.item_description)
-    public TextView mItemDescription;
+    public TextView itemDescription;
 
     @BindView(R.id.item_action)
-    public TextView mItemAction;
+    public TextView itemAction;
 
     public static SurveyItemFragment newInstance(Survey survey) {
         SurveyItemFragment fragment = new SurveyItemFragment();
@@ -60,7 +60,6 @@ public class SurveyItemFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.survey_item, container, false);
@@ -72,26 +71,25 @@ public class SurveyItemFragment extends Fragment implements View.OnClickListener
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
 
-        // load image in mItemCover
+        // load image in itemCover
         Picasso.with(getContext())
                 .load(surveyData.getCoverImageUrl() + Constants.IDENTIFIER_HIGH_RES_IMAGE)
                 .error(R.color.placeholder)
-                .into(mItemCover);
+                .into(itemCover);
 
         // set title and description
-        mItemTitle.setText(surveyData.getTitle());
-        mItemDescription.setText(surveyData.getDescription());
+        itemTitle.setText(surveyData.getTitle());
+        itemDescription.setText(surveyData.getDescription());
 
-        mItemAction.setOnClickListener(this);
+        itemAction.setOnClickListener(this);
     }
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if (unbinder != null) {
             unbinder.unbind();
         }
-
-        super.onDestroy();
     }
 
     @Override

@@ -17,23 +17,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * Created by Gaurav Saluja on 24-Mar-18.
  */
 
 public class BaseFragment extends Fragment {
 
-    private Context mContext;
-    public Unbinder unbinder;
+    private Context context;
 
     private static final String KEY_FRAGMENT_ID = "KEY_FRAGMENT_ID";
-    private static final Map<Long, ConfigurationPersistComponent> sComponentsMap = new HashMap<>();
+    private static final Map<Long, ConfigurationPersistComponent> componentsMap = new HashMap<>();
     private static final AtomicLong NEXT_ID = new AtomicLong(0);
-    private FragmentComponent mFragmentComponent;
-    private long mFragmentId;
+    private FragmentComponent fragmentComponent;
+    private long fragmentId;
 
     /**
      * Gets context.
@@ -41,7 +37,7 @@ public class BaseFragment extends Fragment {
      * @return the context
      */
     public Context getContext() {
-        return mContext;
+        return context;
     }
 
     /**
@@ -50,44 +46,43 @@ public class BaseFragment extends Fragment {
      * @param mContext the m context
      */
     protected void setContext(Context mContext) {
-        this.mContext = mContext;
+        this.context = mContext;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mContext = activity;
+        context = activity;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mFragmentId = savedInstanceState != null ? savedInstanceState.getLong(KEY_FRAGMENT_ID) : NEXT_ID.getAndIncrement();
+        fragmentId = savedInstanceState != null ? savedInstanceState.getLong(KEY_FRAGMENT_ID) : NEXT_ID.getAndIncrement();
         ConfigurationPersistComponent configPersistentComponent;
-        if (!sComponentsMap.containsKey(mFragmentId)) {
+        if (!componentsMap.containsKey(fragmentId)) {
             configPersistentComponent = DaggerConfigurationPersistComponent.builder()
                     .appComponent(NimblApplication.getAppComponent(getActivity()))
                     .build();
 
-            sComponentsMap.put(mFragmentId, configPersistentComponent);
+            componentsMap.put(fragmentId, configPersistentComponent);
         } else {
-            configPersistentComponent = sComponentsMap.get(mFragmentId);
+            configPersistentComponent = componentsMap.get(fragmentId);
         }
-        mFragmentComponent = configPersistentComponent.fragmentComponent(new FragmentModule(this));
-        mFragmentComponent.inject(this);
+        fragmentComponent = configPersistentComponent.fragmentComponent(new FragmentModule(this));
+        fragmentComponent.inject(this);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
     }
 
     @Override
     public void onDestroy() {
         if (!getActivity().isChangingConfigurations()) {
-            sComponentsMap.remove(mFragmentId);
+            componentsMap.remove(fragmentId);
         }
 
         super.onDestroy();
@@ -95,14 +90,10 @@ public class BaseFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
-
         super.onDestroyView();
     }
 
     public FragmentComponent getFragmentComponent() {
-        return mFragmentComponent;
+        return fragmentComponent;
     }
 }

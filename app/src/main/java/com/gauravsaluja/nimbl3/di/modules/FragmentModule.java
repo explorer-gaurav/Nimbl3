@@ -15,23 +15,23 @@ import dagger.Provides;
 @Module
 public class FragmentModule {
 
-    private Fragment mFragment;
-    private Activity mActivity;
+    private Fragment fragment;
+    private Activity activity;
 
     public FragmentModule(Fragment fragment) {
-        mFragment = fragment;
-        mActivity = fragment.getActivity();
+        this.fragment = fragment;
+        activity = fragment.getActivity();
     }
 
     @Provides
     @FragmentScope
     public Fragment provideFragment() {
-        return mFragment;
+        return fragment;
     }
 
     @Provides
     @FragmentScope
     public Activity provideActivity() {
-        return mActivity;
+        return activity;
     }
 }

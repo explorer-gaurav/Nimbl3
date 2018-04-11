@@ -14,26 +14,21 @@ import com.gauravsaluja.nimbl3.di.modules.ActivityModule;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * Created by Gaurav Saluja on 24-Mar-18.
  */
 
 public class BaseActivity extends AppCompatActivity {
 
-    public Unbinder unbinder;
-
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     private static final String KEY_ACTIVITY_ID = "KEY_ACTIVITY_ID";
-    private static HashMap<Long, ConfigurationPersistComponent> sComponentsMap = new HashMap<>();
-    private static AtomicLong sNextId = new AtomicLong(0);
-    private ActivityComponent mActivityComponent;
-    private long mActivityId;
+    private static HashMap<Long, ConfigurationPersistComponent> componentsMap = new HashMap<>();
+    private static AtomicLong nextId = new AtomicLong(0);
+    private ActivityComponent activityComponent;
+    private long activityId;
 
     private boolean activityStopped;
     private boolean activityDestroyed;
@@ -41,27 +36,26 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        unbinder = ButterKnife.bind(this);
 
-        mActivityId = savedInstanceState != null ? savedInstanceState.getLong(KEY_ACTIVITY_ID) : sNextId.getAndIncrement();
+        activityId = savedInstanceState != null ? savedInstanceState.getLong(KEY_ACTIVITY_ID) : nextId.getAndIncrement();
         ConfigurationPersistComponent configurationPersistComponent;
 
-        if (!sComponentsMap.containsKey(mActivityId)) {
+        if (!componentsMap.containsKey(activityId)) {
             configurationPersistComponent = DaggerConfigurationPersistComponent.builder()
                     .appComponent(NimblApplication.getAppComponent(this))
                     .build();
 
-            sComponentsMap.put(mActivityId, configurationPersistComponent);
+            componentsMap.put(activityId, configurationPersistComponent);
         } else {
-            configurationPersistComponent = sComponentsMap.get(mActivityId);
+            configurationPersistComponent = componentsMap.get(activityId);
         }
 
-        mActivityComponent = configurationPersistComponent.activityComponent(new ActivityModule(this));
-        mActivityComponent.inject(this);
+        activityComponent = configurationPersistComponent.activityComponent(new ActivityModule(this));
+        activityComponent.inject(this);
     }
 
     public ActivityComponent getActivityComponent() {
-        return mActivityComponent;
+        return activityComponent;
     }
 
     /**
@@ -99,19 +93,15 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong(KEY_ACTIVITY_ID, mActivityId);
+        outState.putLong(KEY_ACTIVITY_ID, activityId);
     }
 
     @Override
     protected void onDestroy() {
         activityDestroyed = true;
 
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
-
         if (!isChangingConfigurations()) {
-            sComponentsMap.remove(mActivityId);
+            componentsMap.remove(activityId);
         }
         super.onDestroy();
     }

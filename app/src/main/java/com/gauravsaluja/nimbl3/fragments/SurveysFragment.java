@@ -33,9 +33,9 @@ import butterknife.Unbinder;
  * Created by Gaurav Saluja on 24-Mar-18.
  */
 
-public class SurveyFragment extends Fragment implements SurveyContract.View {
+public class SurveysFragment extends Fragment implements SurveyContract.View, View.OnClickListener {
 
-    public static String TAG_FRAGMENT = SurveyFragment.class.getSimpleName();
+    public static String TAG_FRAGMENT = SurveysFragment.class.getSimpleName();
 
     @BindView(R.id.progress_parent)
     public View progressParent;
@@ -47,19 +47,22 @@ public class SurveyFragment extends Fragment implements SurveyContract.View {
     public TextView progressText;
 
     @BindView(R.id.survey_pager)
-    public VerticalViewPager mViewPager;
+    public VerticalViewPager viewPager;
 
     @BindView(R.id.indicator_surveys)
-    public CirclePageIndicator mIndicator;
+    public CirclePageIndicator indicator;
+
+    @BindView(R.id.action_retry)
+    public TextView actionRetry;
 
     private Unbinder unbinder;
-    private PagerAdapter mPagerAdapter;
+    private PagerAdapter pagerAdapter;
 
     @Inject
     protected SurveyPresenter surveyPresenter;
 
-    public static SurveyFragment newInstance() {
-        SurveyFragment fragment = new SurveyFragment();
+    public static SurveysFragment newInstance() {
+        SurveysFragment fragment = new SurveysFragment();
         return fragment;
     }
 
@@ -71,7 +74,6 @@ public class SurveyFragment extends Fragment implements SurveyContract.View {
         NimblApplication.getAppComponent(getActivity()).inject(this);
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_survey, container, false);
@@ -82,6 +84,8 @@ public class SurveyFragment extends Fragment implements SurveyContract.View {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
+
+        actionRetry.setOnClickListener(this);
     }
 
     @Override
@@ -97,25 +101,30 @@ public class SurveyFragment extends Fragment implements SurveyContract.View {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if (unbinder != null) {
             unbinder.unbind();
         }
-
-        super.onDestroy();
     }
 
     @Override
     public void onErrorGetToken() {
-
+        showProgressBar(R.string.error_generating_token);
+        showRetryButton();
     }
 
     @Override
     public void onErrorGetSurveys() {
-
+        showProgressBar(R.string.error_fetching_surveys);
+        showRetryButton();
     }
 
     @Override
     public void onSuccessGetToken(Token token) {
+
+        hideProgressBar();
+        hideRetryButton();
+
         // on success of get token, fetch surveys using the retrieved access token
         surveyPresenter.fetchSurveys(1, 10, token.getAccessToken());
     }
@@ -123,12 +132,15 @@ public class SurveyFragment extends Fragment implements SurveyContract.View {
     @Override
     public void onSuccessGetSurveys(List<Survey> surveys) {
 
+        hideProgressBar();
+        hideRetryButton();
+
         // setup the view pager and indicator based on survey response
-        mPagerAdapter = new SurveyAdapter(getFragmentManager(), surveys);
-        mViewPager.setOffscreenPageLimit(mPagerAdapter.getCount());
-        mViewPager.setAdapter(mPagerAdapter);
-        mIndicator.setViewPager(mViewPager);
-        mIndicator.setOrientation(LinearLayout.VERTICAL);
+        pagerAdapter = new SurveyAdapter(getFragmentManager(), surveys);
+        viewPager.setOffscreenPageLimit(pagerAdapter.getCount());
+        viewPager.setAdapter(pagerAdapter);
+        indicator.setViewPager(viewPager);
+        indicator.setOrientation(LinearLayout.VERTICAL);
     }
 
     @Override
@@ -150,5 +162,24 @@ public class SurveyFragment extends Fragment implements SurveyContract.View {
     @Override
     public void hideProgressBar() {
         progressParent.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showRetryButton() {
+        actionRetry.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideRetryButton() {
+        actionRetry.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.action_retry:
+                surveyPresenter.generateToken();
+                break;
+        }
     }
 }

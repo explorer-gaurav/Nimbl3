@@ -14,15 +14,15 @@ import dagger.Provides;
 @Module
 public class ActivityModule {
 
-    private Activity mActivity;
+    private Activity activity;
 
     public ActivityModule(Activity activity) {
-        mActivity = activity;
+        this.activity = activity;
     }
 
     @Provides
     @ActivityScope
     public Activity provideActivity() {
-        return mActivity;
+        return activity;
     }
 }

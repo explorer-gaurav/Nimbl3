@@ -56,6 +56,13 @@ public class Survey implements Parcelable {
         this.coverImageUrl = in.readString();
     }
 
+    public Survey(String id, String title, String description, String coverImageUrl) {
+        this.id = id;
+        this.title = title;
+        this.description =  description;
+        this.coverImageUrl = coverImageUrl;
+    }
+
     public static final Creator<Survey> CREATOR = new Creator<Survey>() {
         @Override
         public Survey createFromParcel(Parcel source) {

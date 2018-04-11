@@ -10,5 +10,9 @@
     <string name="generating_token">Generating Token...</string>
     <string name="fetching_surveys">Fetching Surveys...</string>
 
+    <string name="error_generating_token">Error generating token...</string>
+    <string name="error_fetching_surveys">Error fetching surveys...</string>
+
     <string name="take_surveys">Take Surveys</string>
+    <string name="retry">Retry</string>
 </resources>

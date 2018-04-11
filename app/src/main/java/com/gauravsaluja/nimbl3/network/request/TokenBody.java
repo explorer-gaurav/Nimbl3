@@ -21,6 +21,16 @@ public class TokenBody {
     @Expose
     private String password;
 
+    public TokenBody() {
+
+    }
+
+    public TokenBody(String grantType, String username, String password) {
+        this.grantType = grantType;
+        this.username = username;
+        this.password = password;
+    }
+
     public void setGrantType(String grantType) {
         this.grantType = grantType;
     }

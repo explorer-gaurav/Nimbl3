@@ -24,16 +24,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     public static final String NIMBL3 = "nimbl3";
-    private String mBaseUrl;
+    private String baseUrl;
 
     public NetworkModule(String baseUrl) {
-        mBaseUrl = baseUrl;
+        this.baseUrl = baseUrl;
     }
 
     @Provides
     @Singleton
     public String provideBaseUrl() {
-        return mBaseUrl;
+        return baseUrl;
     }
 
     @Provides

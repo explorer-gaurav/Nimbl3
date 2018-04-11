@@ -1,6 +1,7 @@
 package com.gauravsaluja.nimbl3.mvp.contract;
 
 import com.gauravsaluja.nimbl3.baseclasses.BaseView;
+import com.gauravsaluja.nimbl3.network.request.TokenBody;
 import com.gauravsaluja.nimbl3.network.response.Survey;
 import com.gauravsaluja.nimbl3.network.response.Token;
 
@@ -29,6 +30,10 @@ public class SurveyContract {
         void showProgressBar(int progressTextId);
 
         void hideProgressBar();
+
+        void showRetryButton();
+
+        void hideRetryButton();
     }
 
     // functions available at Presenter layer

@@ -37,6 +37,17 @@ public class Token implements Parcelable {
         dest.writeValue(this.createdAt);
     }
 
+    public Token() {
+
+    }
+
+    public Token(String accessToken, String tokenType, Integer expiresIn, Integer createdAt) {
+        this.accessToken = accessToken;
+        this.tokenType = tokenType;
+        this.expiresIn = expiresIn;
+        this.createdAt = createdAt;
+    }
+
     protected Token(Parcel in) {
         this.accessToken = in.readString();
         this.tokenType = in.readString();

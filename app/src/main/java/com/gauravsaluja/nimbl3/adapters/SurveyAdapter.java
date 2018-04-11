@@ -17,22 +17,22 @@ import java.util.List;
 
 public class SurveyAdapter extends FragmentStatePagerAdapter {
 
-    private List<Survey> mSurveys;
+    private List<Survey> surveys;
     private static SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
     public SurveyAdapter(FragmentManager fm, List<Survey> surveys) {
         super(fm);
-        mSurveys = surveys;
+        this.surveys = surveys;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return SurveyItemFragment.newInstance(mSurveys.get(position));
+        return SurveyItemFragment.newInstance(surveys.get(position));
     }
 
     @Override
     public int getCount() {
-        return mSurveys.size();
+        return surveys.size();
     }
 
     @Override

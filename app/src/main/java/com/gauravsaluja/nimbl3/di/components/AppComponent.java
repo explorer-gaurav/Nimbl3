@@ -4,9 +4,7 @@ import android.app.Application;
 
 import com.gauravsaluja.nimbl3.di.modules.AppModule;
 import com.gauravsaluja.nimbl3.di.modules.NetworkModule;
-import com.gauravsaluja.nimbl3.di.modules.SurveyModule;
-import com.gauravsaluja.nimbl3.fragments.SurveyFragment;
-import com.gauravsaluja.nimbl3.mvp.presenter.SurveyPresenter;
+import com.gauravsaluja.nimbl3.fragments.SurveysFragment;
 import com.gauravsaluja.nimbl3.network.service.SurveyService;
 
 import javax.inject.Named;
@@ -20,7 +18,7 @@ import retrofit2.Retrofit;
  */
 
 @Singleton
-@Component(modules = {AppModule.class, NetworkModule.class, SurveyModule.class})
+@Component(modules = {AppModule.class, NetworkModule.class})
 public interface AppComponent {
 
     Application provideApplication();
@@ -32,7 +30,5 @@ public interface AppComponent {
 
     SurveyService provideSurveyService();
 
-    void inject(SurveyFragment surveyFragment);
-
-    void inject(SurveyPresenter surveyPresenter);
+    void inject(SurveysFragment surveysFragment);
 }

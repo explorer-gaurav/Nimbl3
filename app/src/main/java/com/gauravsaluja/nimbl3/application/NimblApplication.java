@@ -7,7 +7,6 @@ import com.gauravsaluja.nimbl3.di.components.AppComponent;
 import com.gauravsaluja.nimbl3.di.components.DaggerAppComponent;
 import com.gauravsaluja.nimbl3.di.modules.AppModule;
 import com.gauravsaluja.nimbl3.di.modules.NetworkModule;
-import com.gauravsaluja.nimbl3.di.modules.SurveyModule;
 import com.gauravsaluja.nimbl3.utils.Constants;
 
 /**
@@ -16,41 +15,30 @@ import com.gauravsaluja.nimbl3.utils.Constants;
 
 public class NimblApplication extends Application {
 
-    private static Context context;
-    private static AppComponent sAppComponent;
-    private static Object sObjectLock = new Object();
-
-    public static Context getContext() {
-        return context;
-    }
+    private static AppComponent appComponent;
+    private static Object objectLock = new Object();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        NimblApplication.context = getApplicationContext();
     }
 
     public static AppComponent getAppComponent(Context context) {
         NimblApplication nimblApplication = (NimblApplication) context.getApplicationContext();
-        if (sAppComponent == null)
-            synchronized (sObjectLock) {
-                if (sAppComponent == null) {
-                    sAppComponent = DaggerAppComponent.builder()
+        if (appComponent == null)
+            synchronized (objectLock) {
+                if (appComponent == null) {
+                    appComponent = DaggerAppComponent.builder()
                             .appModule(nimblApplication.getApplicationModule())
                             .networkModule(nimblApplication.getNetworkModule())
-                            .surveyModule(nimblApplication.getSurveyModule())
                             .build();
                 }
             }
-        return sAppComponent;
+        return appComponent;
     }
 
     private AppModule getApplicationModule() {
         return new AppModule(this);
-    }
-
-    private SurveyModule getSurveyModule() {
-        return new SurveyModule();
     }
 
     private NetworkModule getNetworkModule() {

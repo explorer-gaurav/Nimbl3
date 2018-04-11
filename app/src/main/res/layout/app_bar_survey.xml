@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gauravsaluja.nimbl3.activities.SurveyActivity">
+    tools:context="com.gauravsaluja.nimbl3.activities.SurveysActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_survey"
             android:layout_width="match_parent"
             android:layout_height="@dimen/value_48dp"
             android:background="?attr/colorPrimary"

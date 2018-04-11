@@ -30,4 +30,25 @@
         app:strokeColor="@color/white"
         app:strokeWidth="@dimen/value_1dp" />
 
+    <com.gauravsaluja.nimbl3.customviews.TextViewNunitoRegularFont
+        android:id="@+id/action_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_take_survey_button"
+        android:gravity="center"
+        android:paddingBottom="@dimen/value_12dp"
+        android:paddingEnd="@dimen/value_20dp"
+        android:paddingLeft="@dimen/value_20dp"
+        android:paddingRight="@dimen/value_20dp"
+        android:paddingStart="@dimen/value_20dp"
+        android:paddingTop="@dimen/value_12dp"
+        android:text="@string/retry"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize_20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
